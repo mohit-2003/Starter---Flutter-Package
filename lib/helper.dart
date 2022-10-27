@@ -75,10 +75,19 @@ abstract class Helper {
     }
   }
 
-  static Future<void> runCommand(
-      String command, [List<String>? arguments]) async {
+  static Future<void> runCommand(String command,
+      [List<String>? arguments]) async {
     try {
       await Process.run(command, arguments ?? [], runInShell: true);
+    } catch (e) {
+      print("Error occured while running command : ${e.toString()}");
+    }
+  }
+
+  static void clearYAMLComment() async {
+    try {
+      pubspecFile.writeAsStringSync(
+          pubspecFile.readAsStringSync().replaceAll(RegExp("/*#.*"), ""));
     } catch (e) {
       print("Error occured while running command : ${e.toString()}");
     }
