@@ -2,6 +2,7 @@ import 'dart:io';
 
 abstract class Helper {
   static const String libPath = 'lib/';
+  static final File pubspecFile = File("pubspec.yaml");
 
   /// Folders name
   static const String assetsPath = 'assets';
@@ -42,40 +43,52 @@ abstract class Helper {
       {bool dev = false}) async {
     final name = dev ? "dev_dependencies" : "dependencies";
     try {
-      var file = File("pubspec.yaml");
-      if (file.existsSync()) {
-        var result = await Process.run(
-            !dev ? "flutter pub add" : "flutter pub add -d", packageNames,
-            runInShell: true);
+      await Process.run(
+          !dev ? "flutter pub add" : "flutter pub add -d", packageNames,
+          runInShell: true);
 
-        print(result.exitCode.toString());
-
-        print("added some $name");
-      } else {
-        print("pubspec.yaml does not exists");
-      }
+      print("added some $name");
     } catch (e) {
       print("Error occured while adding $name : ${e.toString()}");
     }
   }
 
-  static void addPackage(List<String> packageNames) {
+  static void enableAssets() async {
     try {
-      var file = File("pubspec.yaml");
-      if (file.existsSync()) {
-        final packages = packageNames.map((e) => "  $e:\n").join();
-        final contents = file.readAsStringSync();
-        // final i = contents.indexOf("flutter:");
-        // print(i);
-        // file.writeAsStringSync(contents);
+      final contents = pubspecFile.readAsStringSync();
+      final i = contents.replaceFirst("# assets:", '''assets:
+    - assets/images''');
+      pubspecFile.writeAsStringSync(i);
+      print("enabling assets");
+    } catch (e) {
+      print("Error occured while enabling assets : ${e.toString()}");
+    }
+  }
 
-      } else {
-        print("pubspec.yaml does not exists");
-      }
+  static void addPackageSection(List<String> packageSections) {
+    try {
+      final packages = packageSections.map((e) => "$e\n").join();
+      final contents = pubspecFile.readAsStringSync();
+      pubspecFile.writeAsStringSync('$contents\n$packages');
     } catch (e) {
       print("Error occured while adding package: ${e.toString()}");
     }
   }
 
-  static Future<void> processRun() async {}
+  static Future<void> runCommand(
+      String command, [List<String>? arguments]) async {
+    try {
+      await Process.run(command, arguments ?? [], runInShell: true);
+    } catch (e) {
+      print("Error occured while running command : ${e.toString()}");
+    }
+  }
+
+  static void runPubGet() async {
+    try {
+      await Process.run("flutter pub get", [], runInShell: true);
+    } catch (e) {
+      print("Error occured while enabling assets : ${e.toString()}");
+    }
+  }
 }

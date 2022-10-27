@@ -11,6 +11,11 @@ class Starter {
     if (!lib.existsSync()) {
       throw Exception("lib folder does not exists");
     }
+
+    if (!Helper.pubspecFile.existsSync()) {
+      print("pubspec.yaml does not exists");
+    }
+
     // Helper.createFolder(Helper.assetsPath);
     // Helper.createFolder("${Helper.assetsPath}/${Helper.imagePath}");
     // Helper.createFolder("${Helper.libPath}${Helper.screens}");
@@ -38,24 +43,34 @@ class Starter {
     //     "${Helper.libPath}${Helper.utils}/utils.dart");
 
     // Adding commonly used packages/plugins
-    Helper.addDependencies([
-      "flutter_app_name",
-      "change_app_package_name",
-      "flutter_launcher_icons"
-    ], dev: true);
-    await Helper.addDependencies([
-      "share_plus",
-      "package_info_plus",
-      "firebase_core",
-      "shared_preferences",
-      "internet_connection_checker",
-      "flutter_riverpod",
-    ]);
-    // TODO: Replace with custom code
-    // TODO: Not working
-    // Helper.addPackage([
-    //   'flutter_app_name:\n  name: "Recipe App"',
+    // Helper.addDependencies([
+    //   "flutter_app_name",
+    //   "change_app_package_name",
+    //   "flutter_launcher_icons"
+    // ], dev: true);
+    // await Helper.addDependencies([
+    //   "share_plus",
+    //   "package_info_plus",
+    //   "firebase_core",
+    //   "shared_preferences",
+    //   "internet_connection_checker",
+    //   "flutter_riverpod"
     // ]);
+    // TODO: Replace with own code
+    // Helper.addPackageSection([
+    //   '# Change app name -> Run command -> flutter pub run flutter_app_name\nflutter_app_name:\n  name: "Recipe App" # Your app name\n',
+    //   '# Change Launcher Icon -> Run command -> flutter pub run flutter_launcher_icons:main\nflutter_icons:\n  android: "ic_launcher"\n  image_path: "assets/images/icon.png" # Your icon path\n'
+    // ]);
+
+    // Helper.enableAssets();
+
+    await Helper.runCommand("flutter pub run flutter_app_name");
+    await Helper.runCommand("flutter pub run change_app_package_name:main",
+        arguments = ["com.new.package.name"]);
+    await Helper.runCommand("flutter pub run flutter_launcher_icons:main");
+
+    // running pub get command
+    // Helper.runPubGet();
 
     print("Successfully created");
   }
