@@ -1,5 +1,5 @@
-name: starter
-description: A new Flutter package project.
+name: starter_project
+description: A command-line tool that makes your normal project to starter project.
 version: 0.0.1
 homepage: https://github.com/mohit-2003/Starter---Flutter-Package
 

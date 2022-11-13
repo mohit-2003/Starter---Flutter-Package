@@ -16,9 +16,9 @@ A command-line tool that makes your normal project to starter project.
 
 ```
 dev_dependencies:
-  starter: <latest-version>
+  starter_project: <latest-version>
 
-starter:
+starter_project:
   app_name: "Your App Name"
   package: "com.example.your_app_name"
 ```
@@ -27,5 +27,5 @@ starter:
 
 ```
 flutter pub get
-flutter pub run starter
+flutter pub run starter_project
 ```

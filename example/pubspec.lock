@@ -455,7 +455,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
-  starter:
+  starter_project:
     dependency: "direct dev"
     description:
       path: ".."

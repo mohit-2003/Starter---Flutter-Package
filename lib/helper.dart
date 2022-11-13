@@ -1,11 +1,9 @@
-// ignore_for_file: unnecessary_string_escapes
-
 import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
 abstract class Helper {
-  static const String starterKey = 'starter';
+  static const String starterKey = 'starter_project';
   static const String libPath = 'lib/';
   static final File pubspecFile = File("pubspec.yaml");
   static final File manifestFile =

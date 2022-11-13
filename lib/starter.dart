@@ -2,7 +2,7 @@ library starter;
 
 import 'dart:io';
 
-import 'package:starter/helper.dart';
+import 'helper.dart';
 
 class Starter {
   static void process(List<String> arguments) async {
