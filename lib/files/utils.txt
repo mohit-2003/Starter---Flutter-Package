@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/utils/app_details.dart';
-import 'package:recipe_app/utils/constants.dart';
+import 'app_details.dart';
+import 'constants.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Utils {

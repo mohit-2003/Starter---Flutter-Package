@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
-
 import 'app_details.dart';
 import 'constants.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Utils {
   static void share(String text) async {

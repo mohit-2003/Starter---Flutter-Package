@@ -1,8 +1,15 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'dart:io';
 
+import 'package:yaml/yaml.dart';
+
 abstract class Helper {
+  static const String starterKey = 'starter';
   static const String libPath = 'lib/';
   static final File pubspecFile = File("pubspec.yaml");
+  static final File manifestFile =
+      File("android/app/src/main/AndroidManifest.xml");
 
   /// Folders name
   static const String assetsPath = 'assets';
@@ -59,7 +66,6 @@ abstract class Helper {
       final i = contents.replaceFirst("# assets:", '''assets:
     - assets/images''');
       pubspecFile.writeAsStringSync(i);
-      print("enabling assets");
     } catch (e) {
       print("Error occured while enabling assets : ${e.toString()}");
     }
@@ -99,5 +105,56 @@ abstract class Helper {
     } catch (e) {
       print("Error occured while enabling assets : ${e.toString()}");
     }
+  }
+
+  static void changeAppName(String appName) {
+    final manifestData = manifestFile.readAsLinesSync();
+    final androidLabel = manifestData
+        .where((element) => element.contains("android:label"))
+        .toList();
+
+    if (androidLabel.isEmpty) {
+      throw Exception("Could not find 'android:label' in ${manifestFile.path}");
+    }
+
+    print(
+        "Old app name : ${androidLabel.first.trim().split("=").last.replaceAll('\"', "")}");
+
+    manifestFile.writeAsStringSync(manifestFile
+        .readAsStringSync()
+        .replaceAll(androidLabel.first, 'android:label="$appName"'));
+
+    print("New app name : $appName");
+  }
+
+  static void renameProject() {
+    final Map yamlData = loadYaml(pubspecFile.readAsStringSync());
+    final Map? keys = yamlData[starterKey];
+
+    if (keys == null) {
+      throw Exception("pubspec.yaml file must have a key $starterKey.");
+    }
+    final String? appName = keys["app_name"];
+    final String? package = keys["package"];
+    final String? icon = keys["icon"];
+
+    if (appName == null) {
+      throw Exception(
+          "You must set the app name under the '$starterKey' section of your pubspec.yaml file.");
+    }
+
+    /// Changing the app name in the AndroidManifest.xml file.
+    changeAppName(appName);
+
+    if (package == null) {
+      throw Exception(
+          "You must set the package name under the '$starterKey' section of your pubspec.yaml file.");
+    }
+
+    changePackageName(package);
+  }
+
+  static void changePackageName(String package) {
+    
   }
 }
