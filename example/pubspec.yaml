@@ -46,8 +46,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  starter:
-    path: ../
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -55,14 +53,15 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  flutter_app_name: ^0.1.1
+  starter:
+    path: ../
   change_app_package_name: ^1.1.0
   flutter_launcher_icons: ^0.10.0
 
 starter:
-  app_name: "Mohit"
-  package: "com.example"
-  icon: ""
+  app_name: "Starter"
+  package: "com.starter"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -106,12 +105,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-# Change app name -> Run command -> flutter pub run flutter_app_name
-flutter_app_name:
-  name: "Starter" # Your app name
-
 # Change Launcher Icon -> Run command -> flutter pub run flutter_launcher_icons:main
 flutter_icons:
   android: "ic_launcher"
   image_path: "assets/images/icon.png" # Your icon path
+
 
